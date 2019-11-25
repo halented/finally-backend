@@ -5,9 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-test1 = User.create(name: "tobuskin", password_digest: "a1b2c3d4e5")
-test2 = User.create(name: "runples", password_digest: "a1b2c3d4e56766")
-test3 = User.create(name: "varicelli", password_digest: "22222")
+test1 = User.create(username: "tobuskin", password_digest: "a1b2c3d4e5", email: "h.tobusk@ymail.com", name: "Holland Tobuskin")
+test2 = User.create(username: "runples", password_digest: "a1b2c3d4e56766", email: "ishlan@youginsaavfamily.com", name: "Ishlan Youginsaav")
+test3 = User.create(username: "varicelli", password_digest: "22222", email: "greenpreen67@yahoo.com", name: "Evan Preen Varicelli")
 
 
 10.times do 
