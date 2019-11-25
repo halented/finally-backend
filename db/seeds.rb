@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+test1 = User.create(name: "tobuskin", password_digest: "a1b2c3d4e5")
+test2 = User.create(name: "runples", password_digest: "a1b2c3d4e56766")
+test3 = User.create(name: "varicelli", password_digest: "22222")
+
+
+10.times do 
+Introvert.create(name: Faker::TvShows::BojackHorseman.character, activity: Faker::Sports::Basketball.position, on_cooldown: false)
+end
+
+Introvert.all.each do |int| 
+    Friendship.create(user_id: User.all.sample.id, introvert_id: int.id)
+end
