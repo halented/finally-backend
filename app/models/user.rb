@@ -1,8 +1,8 @@
 class User < ApplicationRecord
     include EmailValidatable
     
+    validates :email, presence: true, 'valid_email_2/email': true
     has_secure_password
-    validates :email, email: true
 
     has_many :friendships
     has_many :introverts, through: :friendships

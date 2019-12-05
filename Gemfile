@@ -19,6 +19,8 @@ gem 'pg'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
 
+#email validator
+gem "valid_email2"
 #enable serializers 
 gem 'active_model_serializers'
 
