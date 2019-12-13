@@ -1,10 +1,10 @@
 class AuthController < ApplicationController
     def create
-        puts "WE HIT THIS AUTH CONTROLLER CREATE METHOD, HELLOOOOOOO I'M MAKING THIS HUGE AND ANNOYING SO THAT WHEN YOU SEE IT IN THE SERVER YOU CANNOT MISS IT"
-        puts "                                                             "
-        puts "                                                             "
-        puts "                                                             "
-        puts "_____________________________________________________________"
-        puts "WE HIT THIS AUTH CONTROLLER CREATE METHOD, HELLOOOOOOO I'M MAKING THIS HUGE AND ANNOYING SO THAT WHEN YOU SEE IT IN THE SERVER YOU CANNOT MISS IT"
+        user = User.find_by({email: params[:auth][:email]})
+        if user
+            # if the user exists, return json for the user i suppose? and something about the auth session.
+        else
+            # create the user, then return json....of mayb just the auth session. and i think actually we have to do some password salting stuff here and provide the token.
+        end
     end
 end
