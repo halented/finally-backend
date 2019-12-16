@@ -11,10 +11,21 @@ class UsersController < ApplicationController
 
     def index
         @users = User.all
+        render json: @users
+    end
+
+    def show
+        @user = User.find_by(email: params[:email]) || User.find_by(username: params[:username])
+        # check if we have a user by email or username
+        if @user.valid?
+            render json: { user: user.id}, status: 200
+        else
+            render json: { error: 'no user found'}, status: :not_acceptable
+        end
     end
 
     private
     def user_params
-        params.require(:user).permit(:username, :password, :bio, :avatar, :email)
+        params.require(:user).permit(:username, :password, :email)
     end
 end
