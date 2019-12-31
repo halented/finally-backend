@@ -1,6 +1,7 @@
 class AuthController < ApplicationController
     def create
         @user = User.find_by({email: params[:auth][:email]})
+        #authenticate comes from bcrypt
         if @user && @user.authenticate(params[:auth][:password]) === true
             # if the user exists, return the jwt token and or whatever you want idfk
             # inside of this create method you can decide how to handle whether or not the email axists and if you want to check for the username
