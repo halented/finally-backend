@@ -10,12 +10,8 @@ class ApplicationController < ActionController::API
     def decode_token(token)
         begin
             JWT.decode(token, 'sara mclachlan')[0]
-        rescue =>
-            JWT::DecodeError
-            puts "ARE YOU FEELING IT NOW, MR. CRABS?"
-            puts "ARE YOU FEELING IT NOW, MR. CRABS?"
-            puts "ARE YOU FEELING IT NOW, MR. CRABS?"
-            puts "ARE YOU FEELING IT NOW, MR. CRABS?"
+        rescue JWT::DecodeError
+            nil
         end
     end
         
