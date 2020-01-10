@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2019_11_25_231404) do
   create_table "introverts", force: :cascade do |t|
     t.string "name"
     t.string "activity"
+    t.string "img_ref"
     t.boolean "on_cooldown"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

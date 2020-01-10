@@ -21,5 +21,4 @@ class AuthController < ApplicationController
     def show
         # used to verify that the user is who they say they are and are allowed to view things
     end
-    # maybe if the params give you trouble just do this manually above instead of strong params
 end
