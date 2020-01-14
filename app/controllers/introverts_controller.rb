@@ -5,9 +5,11 @@ class IntrovertsController < ApplicationController
     end
     
     def create
-        byebug
+        # byebug
+        current_user
         introv = Introvert.create(introvert_params)
-        puts "helo??!"
+        friendship = Friendship.create(user: current_user, introvert: introv)
+        render json: {friendship: friendship, introvert: introv}
     end
 
     private
