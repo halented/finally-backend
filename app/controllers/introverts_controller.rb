@@ -5,16 +5,26 @@ class IntrovertsController < ApplicationController
     end
     
     def create
-        # byebug
         current_user
         introv = Introvert.create(introvert_params)
         friendship = Friendship.create(user: current_user, introvert: introv)
         render json: {friendship: friendship, introvert: introv}
     end
 
+    def show
+        introv = set_introv
+        friendship = Friendship.find_by(user: current_user)
+        introv.users.select{|user| user === current_user}
+        render json: {user: current_user, introvert: introv}
+    end
+
     private
 
     def introvert_params
         params.require(:introvert).permit(:name, :activity, :img_ref, :on_cooldown)
+    end
+
+    def set_introv
+        @introvert = Introvert.find(params[:id])
     end
 end
