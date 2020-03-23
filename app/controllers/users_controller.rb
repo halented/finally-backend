@@ -16,10 +16,11 @@ class UsersController < ApplicationController
 
     def show
         @user = User.find_by(id: params[:id])
+        # byebug
 
         # check if we have a user by email or username
         if !!@user && @user.valid?
-            render json: { user: @user, introverts: @user.introverts}, status: 200
+            render json: { user: @user, introverts: @user.introverts, purposes: Purpose.all}, status: 200
         else
             render json: { error: 'no user found'}, status: :not_acceptable
         end
