@@ -16,14 +16,12 @@ class UsersController < ApplicationController
 
     def show
         @user = User.find_by(id: params[:id])
-        # byebug
-
         # check if we have a user by email or username
         if !!@user && @user.valid?
             hangs = find_and_format_hangouts(@user)
-            puts "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
+            puts "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
             puts hangs
-            puts "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
+            puts "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
             render json: { user: @user, introverts: @user.introverts, purposes: Purpose.all, hangouts: hangs}, status: 200
         else
             render json: { error: 'no user found'}, status: :not_acceptable
@@ -35,16 +33,12 @@ class UsersController < ApplicationController
     def find_and_format_hangouts(user)
         hangs = []
         user.friendships.each do |ship|
-            # byebug
-            # make the data readable for the front end
+            # make the data readable for the front end -- return the purpose of the hangout, the friend, and the date
             ship.hangouts.each do |hang|
-                hangs.push({hang.purpose.title=> hang.friendship.introvert.name})
-                # byebug
+                hangs.push({hang.purpose.title=> [hang.friendship.introvert.name, hang.created_at]})
             end
-            # byebug
-            # hangs.push({ship.hangouts => ship.introvert})
         end
-        return hangs.flatten
+        return hangs
     end
 
     private
