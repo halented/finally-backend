@@ -54,6 +54,17 @@ class UsersController < ApplicationController
         end
     end
 
+    def chart
+        # puts "HIT THE ROUTE CHART CHART ROUTE HIT THE ROUTE CHART CHART ROUTE HIT THE ROUTE CHART CHART ROUTE HIT THE ROUTE CHART CHART ROUTE HIT THE ROUTE CHART CHART ROUTE HIT THE ROUTE CHART CHART ROUTE HIT THE ROUTE CHART CHART ROUTE"
+        # byebug
+        data =  [
+            {x: 1, y: 4}, 
+            {x: 2, y: 7},
+            {x: 3, y: 6}
+        ]
+        render json: {data: data}
+    end
+
     private
     def user_params
         params.require(:user).permit(:username, :password, :email)
