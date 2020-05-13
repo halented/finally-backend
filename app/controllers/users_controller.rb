@@ -19,9 +19,7 @@ class UsersController < ApplicationController
         # check if we have a user by email or username
         if !!@user && @user.valid?
             hangs = find_and_format_hangouts(@user)
-            puts "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
-            puts hangs
-            puts "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
+            check_cooldown(@user.introverts)
             render json: { user: @user, introverts: @user.introverts, purposes: Purpose.all, hangouts: hangs}, status: 200
         else
             render json: { error: 'no user found'}, status: :not_acceptable
@@ -34,11 +32,26 @@ class UsersController < ApplicationController
         hangs = []
         user.friendships.each do |ship|
             # make the data readable for the front end -- return the purpose of the hangout, the friend, and the date
+            # later on look into this: created_at.strftime("%Y-%m-%d") -- it will return something like "2020-01-10" to the frontend instead. will probably make that cleaner
             ship.hangouts.each do |hang|
-                hangs.push({hang.purpose.title=> [hang.friendship.introvert.name, hang.created_at]})
+
+                hangs.push({hang.purpose.title=> [hang.friendship.introvert.name, hang.created_at, hang.id]})
             end
         end
         return hangs
+    end
+
+    def check_cooldown(ints)
+        ints.each do |int|
+            if int.on_cooldown
+                # each introvert's cooldown is 240 hours. if the current time minus the last time it was updated (the last time you hung out) is greater than or equal to 240 hours (seen here in seconds), then reset the cooldown & commit the change. 864000
+                time = Time.now
+                if time - int.updated_at >= 864000
+                    int.on_cooldown = false
+                    int.save
+                end
+            end
+        end
     end
 
     private
