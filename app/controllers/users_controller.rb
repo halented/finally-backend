@@ -79,18 +79,20 @@ class UsersController < ApplicationController
             did_it = false
             if data.length > 0
                 data.each do |obj|
-                    if obj['y'] == mo
-                        obj['x'] += 1
+                    if obj['x'] == mo
+                        obj['y'] += 1
                         did_it = true
                     end
                 end
                 if did_it == false
-                    data.push({'y'=> mo, 'x'=>1})
+                    data.push({'x'=> mo, 'y'=>1})
                 end
             else
-                data.push({'y'=> mo, 'x'=>1})
+                data.push({'x'=> mo, 'y'=>1})
             end
         end
+        # before returning the data, order them by the x number
+        data = data.sort_by {|obj| obj['x']}
         return data
     end
 
