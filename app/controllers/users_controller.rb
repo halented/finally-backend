@@ -79,16 +79,16 @@ class UsersController < ApplicationController
             did_it = false
             if data.length > 0
                 data.each do |obj|
-                    if obj['x'] == mo
-                        obj['y'] += 1
+                    if obj['y'] == mo
+                        obj['x'] += 1
                         did_it = true
                     end
                 end
                 if did_it == false
-                    data.push({'x'=> mo, 'y'=>1})
+                    data.push({'y'=> mo, 'x'=>1})
                 end
             else
-                data.push({'x'=> mo, 'y'=>1})
+                data.push({'y'=> mo, 'x'=>1})
             end
         end
         return data
