@@ -68,7 +68,7 @@ class UsersController < ApplicationController
     end
 
     def crunchChartData
-        # what we need to look at is hangouts per mo. so really i have to go into each friendship, and in each
+        # this will only work if the person has 1 year or less of data
         user = User.find_by(id: params[:id])
         data = []
         allHangouts = user.friendships.map{|ship|ship.hangouts}.flatten!
