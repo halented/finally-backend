@@ -20,11 +20,16 @@ class HangoutsController < ApplicationController
             hang = Hangout.new({friendship_id: ship.id, purpose_id: purpose.id, location: 'unknown', duration:60})
             # also need to add a location and duration from frontend info -- but that's details
             if hang.save
-                render json: {message: "Hangout Saved!"}
+                render json: {message: "Hangout Saved!", introvert: int}
             else
                 render json: {error: "Internal error: please try again!"}
             end
         end
+    end
+
+    def show
+        hang = Hangout.find(params[:id])
+        render json: {hangout: HangoutSerializer.new(hang)}
     end
     
 end
