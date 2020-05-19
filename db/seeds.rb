@@ -13,10 +13,21 @@ test3 = User.create(username: "varicelli", password: "22222", email: "greenpreen
 test4 = User.create(username: "tiinymonster", password: "111", email: "tiiny@rocketmail.com", name: "Bernadette Tini")
 
 
+Purpose.create(title: 'Lip Flexing', equipment: 'small towel', intensity: 2)
+Purpose.create(title: 'Jogbarking', equipment: 'sneakers, lightweight megaphone', intensity: 7)
+Purpose.create(title: 'Watching', equipment: 'stick of gum', intensity: 1)
+Purpose.create(title: 'Showing Off', equipment: 'armband', intensity: 5)
+Purpose.create(title: 'Fancy Picking', equipment: 'dumbbells, sand, large hammock, industrial rubber', intensity: 10)
+Purpose.create(title: 'Squid Pulling', equipment: 'wetsuit, drybag, very small rocks', intensity: 8)
+Purpose.create(title: 'Coordinated Milling', equipment: 'subtle clothing, smoke signal sheet', intensity: 3)
+Purpose.create(title: 'Vibreaking', equipment: 'mouth guard, determination', intensity: 9)
+
 10.times do 
-Introvert.create(name: Faker::TvShows::BojackHorseman.character, activity: Faker::Sports::Basketball.position, on_cooldown: false, img_ref: img_array.sample)
+Introvert.create(name: Faker::TvShows::Community.characters, activity: Faker::Games::Pokemon.move, on_cooldown: false, img_ref: img_array.sample)
 end
 
 Introvert.all.each do |int| 
-    Friendship.create(user_id: User.all.sample.id, introvert_id: int.id)
+    (int === Introvert.last) ? Friendship.create(user_id: test4.id, introvert_id: int.id) : Friendship.create(user_id: User.all.sample.id, introvert_id: int.id)
 end
+
+Hangout.create(location: "Gas Works", duration: 60, friendship_id: Friendship.last.id, purpose_id: Purpose.all.sample.id)
