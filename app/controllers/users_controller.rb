@@ -62,38 +62,41 @@ class UsersController < ApplicationController
         #     {x: 2, y: 7},
         #     {x: 3, y: 6}
         # ]
-        data = crunchChartData
+        data = crunchChartData(params["year"])
         
         render json: {data: data}
     end
 
-    def crunchChartData
-        # this will only work if the person has 1 year or less of data
+    def crunchChartData(year)
         user = User.find_by(id: params[:id])
         data = []
         allHangouts = user.friendships.map{|ship|ship.hangouts}.flatten!
 
-        allHangouts.each do |hang| 
-            mo = hang.created_at.month
-            # check if any of the objects inside data have a key of x with a value that matches mo
-            did_it = false
-            if data.length > 0
-                data.each do |obj|
-                    if obj['x'] == mo
-                        obj['y'] += 1
-                        did_it = true
+        allHangouts.each do |hang|
+            if !hang.created_at.year.to_i === year.to_i
+                puts "not this one"
+            else
+                mo = hang.created_at.month
+                # check if any of the objects inside data have a key of x with a value that matches mo
+                did_it = false
+                    if data.length > 0
+                        data.each do |obj|
+                            if obj['x'] == mo
+                                obj['y'] += 1
+                                did_it = true
+                            end
+                        end
+                        if did_it == false
+                            data.push({'x'=> mo, 'y'=>1})
+                        end
+                    else
+                        data.push({'x'=> mo, 'y'=>1})
                     end
                 end
-                if did_it == false
-                    data.push({'x'=> mo, 'y'=>1})
-                end
-            else
-                data.push({'x'=> mo, 'y'=>1})
+                # before returning the data, order them by the x number
+                data = data.sort_by {|obj| obj['x']}
             end
-        end
-        # before returning the data, order them by the x number
-        data = data.sort_by {|obj| obj['x']}
-        return data
+        return data.length > 0 ? data : "Not enough data from specified year"
     end
 
     private

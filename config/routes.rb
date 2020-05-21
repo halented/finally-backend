@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :users do
     # stuff nested inside users, to produce URLS like /users/4/chart
     member do
-      get 'chart'
+      post 'chart'
     end
   end
   resources :auth

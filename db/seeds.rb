@@ -31,3 +31,5 @@ Introvert.all.each do |int|
 end
 
 Hangout.create(location: "Gas Works", duration: 60, friendship_id: Friendship.last.id, purpose_id: Purpose.all.sample.id)
+
+# Hangout.create(location: "Cascadia", duration: 60, friendship_id: Friendship.first.id, purpose_id: Purpose.all.sample.id, created_at: "2020-01-19 17:03:41")
