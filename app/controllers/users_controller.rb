@@ -63,8 +63,12 @@ class UsersController < ApplicationController
         #     {x: 3, y: 6}
         # ]
         data = crunchChartData(params["year"])
+        if data.length > 0
+            render json: {data: data}
+        else
+            render json: {error: "No data from specified year"}
+        end
         
-        render json: {data: data}
     end
 
     def crunchChartData(year)
@@ -88,24 +92,32 @@ class UsersController < ApplicationController
 
         # if there are any, start iterating
         if allHangouts.length > 0
+            altered = false
+            puts "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
+            puts "Shouldn't see this one because allHangouts should not have a length"
+            puts allHangouts.length
+            puts "See? the above is its length"
+            puts "whoops. looks like we grabbed all hangouts but really we should be checking if we altered the data array."
             allHangouts.each do |hang|
                 # make sure the hangout is in the specified year
                 if hang.created_at.year.to_i === year.to_i
+                    
                     #grab month
                     mo = hang.created_at.month
                     # find month inside the data object, and increase the hangout count by one for that month
                     data.each do |obj|
                         if obj['x'].to_i == mo.to_i
                             obj['y'] += 1
+                            altered = true
                         end
                     end
                 end
             end
         else
-            return "No data from specified year"
+            data = []
         end
         
-        return data
+        return altered ? data : []
     end
 
     private
