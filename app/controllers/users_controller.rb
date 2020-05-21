@@ -69,34 +69,43 @@ class UsersController < ApplicationController
 
     def crunchChartData(year)
         user = User.find_by(id: params[:id])
-        data = []
+        data = [
+            {'x'=>1, 'y'=> 0}, 
+            {'x'=> 2, 'y'=> 0},
+            {'x'=> 3, 'y'=> 0},
+            {'x'=> 4, 'y'=> 0},
+            {'x'=> 5, 'y'=> 0},
+            {'x'=> 6, 'y'=> 0},
+            {'x'=> 7, 'y'=> 0},
+            {'x'=> 8, 'y'=> 0},
+            {'x'=> 9, 'y'=> 0},
+            {'x'=> 10, 'y'=> 0},
+            {'x'=> 11, 'y'=> 0},
+            {'x'=> 12, 'y'=> 0}
+        ]
+        # grab all hangouts from this user
         allHangouts = user.friendships.map{|ship|ship.hangouts}.flatten!
 
-        allHangouts.each do |hang|
-            if !hang.created_at.year.to_i === year.to_i
-                puts "not this one"
-            else
-                mo = hang.created_at.month
-                # check if any of the objects inside data have a key of x with a value that matches mo
-                did_it = false
-                    if data.length > 0
-                        data.each do |obj|
-                            if obj['x'] == mo
-                                obj['y'] += 1
-                                did_it = true
-                            end
+        # if there are any, start iterating
+        if allHangouts.length > 0
+            allHangouts.each do |hang|
+                # make sure the hangout is in the specified year
+                if hang.created_at.year.to_i === year.to_i
+                    #grab month
+                    mo = hang.created_at.month
+                    # find month inside the data object, and increase the hangout count by one for that month
+                    data.each do |obj|
+                        if obj['x'].to_i == mo.to_i
+                            obj['y'] += 1
                         end
-                        if did_it == false
-                            data.push({'x'=> mo, 'y'=>1})
-                        end
-                    else
-                        data.push({'x'=> mo, 'y'=>1})
                     end
                 end
-                # before returning the data, order them by the x number
-                data = data.sort_by {|obj| obj['x']}
             end
-        return data.length > 0 ? data : "Not enough data from specified year"
+        else
+            return "No data from specified year"
+        end
+        
+        return data
     end
 
     private
