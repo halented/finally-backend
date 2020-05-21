@@ -90,14 +90,12 @@ class UsersController < ApplicationController
         # grab all hangouts from this user
         allHangouts = user.friendships.map{|ship|ship.hangouts}.flatten!
 
+        # need a way to track whether or not the data has been touched
+        altered = false
+        
         # if there are any, start iterating
         if allHangouts.length > 0
-            altered = false
-            puts "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
-            puts "Shouldn't see this one because allHangouts should not have a length"
-            puts allHangouts.length
-            puts "See? the above is its length"
-            puts "whoops. looks like we grabbed all hangouts but really we should be checking if we altered the data array."
+
             allHangouts.each do |hang|
                 # make sure the hangout is in the specified year
                 if hang.created_at.year.to_i === year.to_i
