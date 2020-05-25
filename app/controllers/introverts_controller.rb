@@ -18,6 +18,16 @@ class IntrovertsController < ApplicationController
         render json: {user: current_user, introvert: introv}
     end
 
+    def update
+        introv = Introvert.find(params[:id])
+        introv.update(introvert_params)
+        if introv.save
+            render json: {introvert: introv}
+        else
+            render json: {error: "Something went wrong"}
+        end
+    end
+
     private
 
     def introvert_params
