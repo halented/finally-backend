@@ -32,10 +32,14 @@ class UsersController < ApplicationController
         hangs = []
         user.friendships.each do |ship|
             # make the data readable for the front end -- return the purpose of the hangout, the friend, and the date
-            # later on look into this: refactor how this info is being sent to use created_at.month, day, year. this way we don't have to save all the months in the frontend
             ship.hangouts.each do |hang|
 
-                hangs.push({hang.purpose.title=> [hang.friendship.introvert.name, hang.created_at, hang.id]})
+                hangs.push({
+                    "hang_id" => hang.id, 
+                    "introvert" => [hang.friendship.introvert.name, hang.friendship.introvert.id], 
+                    "date" => [hang.created_at.month, hang.created_at.day, hang.created_at.year], 
+                    "title" => hang.purpose.title
+                })
                 
             end
         end
