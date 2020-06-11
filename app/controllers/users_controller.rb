@@ -122,8 +122,18 @@ class UsersController < ApplicationController
         return altered ? data : []
     end
 
+    def update
+        puts "!!@000002394576892138037456290756290751907491823478123984719827349172weuirhfaksjdfhcvkjzbshdfkjghs"
+        user = User.find_by(id: params[:id])
+         if user.update(user_params)
+            render json: { user: UserSerializer.new(user)}, status: :accepted
+         else
+            render json: { error: 'failed to save changes'}, status: :not_acceptable
+         end
+    end
+
     private
     def user_params
-        params.require(:user).permit(:username, :password, :email)
+        params.require(:user).permit(:username, :password, :email, :name)
     end
 end
