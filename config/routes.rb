@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   resources :hangouts
   resources :friendships
   resources :introverts
-  resources :users
+  resources :users do
+    # stuff nested inside users, to produce URLS like /users/4/chart
+    member do
+      post 'chart'
+    end
+  end
   resources :auth
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

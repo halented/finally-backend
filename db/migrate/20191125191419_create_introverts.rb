@@ -3,6 +3,7 @@ class CreateIntroverts < ActiveRecord::Migration[6.0]
     create_table :introverts do |t|
       t.string :name
       t.string :activity
+      t.string :img_ref
       t.boolean :on_cooldown
 
       t.timestamps
