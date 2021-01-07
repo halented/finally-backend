@@ -29,7 +29,7 @@ class HangoutsController < ApplicationController
 
     def show
         hang = Hangout.find(params[:id])
-        render json: {hangout: HangoutSerializer.new(hang)}
+        render json:  {hangout: HangoutSerializer.new(hang)}
     end
     
 end
