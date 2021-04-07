@@ -1,5 +1,7 @@
 # FINALLY! AN APP FOR EXTROVERTS
 
+*This is the backend repository. The frontend repository can be found [here](https://github.com/halented/finally-frontend).*
+
 Are you an extrovert? Do you find yourself confused and inept when it comes to respecting the needs of your introvert friends?
 
 Finally, there is an app for youd! With **FINALLY!** AN APP FOR EXTROVERTS, you can:
